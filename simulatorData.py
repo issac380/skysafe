@@ -14,7 +14,15 @@ def connectToSim(agentIP="local", isMain="False"):
 
     time_to_fail = random.randint(10, 60)
     time_to_fail = 10
-    time.sleep(time_to_fail)
+    print(f"Engine will fail in {time_to_fail} seconds.")
+
+    for i in range(time_to_fail):
+        data = client.getData()
+        print(f"Altitude (AGL): {data['Altitude AGL']}, Indicated Airspeed: {data['IAS']}")
+        altitudes.append(data['Altitude AGL'])
+        speeds.append(data['IAS'])
+        time.sleep(1)
+
     client.engineFail()
 
     while True:
